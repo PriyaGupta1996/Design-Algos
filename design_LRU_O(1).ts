@@ -13,6 +13,7 @@ class LRUCache {
 
     get(key: number): number {
         if(this.recentOrderMap.has(key)){
+            //check non null assertion operator. 
             const value = this.recentOrderMap.get(key)!;
             this.recentOrderMap.delete(key);
             this.recentOrderMap.set(key,value);
@@ -26,7 +27,9 @@ class LRUCache {
             this.recentOrderMap.delete(key);
         }
         else if(this.recentOrderMap.size >=this.capacity){
-            const firstKey = this.recentOrderMap.keys().next().value!;
+            // this is important to make "get" O(1), otherwise, we would need to fetch the keys and do a search for the first key, which would be O(n)
+            //check non null assertion operator. 
+            const firstKey = this.recentOrderMap.keys().next().value!; 
             this.recentOrderMap.delete(firstKey);
         }
         this.recentOrderMap.set(key,value);
